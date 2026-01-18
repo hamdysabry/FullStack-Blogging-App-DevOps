@@ -5,7 +5,7 @@ metadata:
   labels:
     app: blogging
 spec:
-  replicas: 1
+  replicas: 2  # ممكن تزود العدد لو عايز scalability
   selector:
     matchLabels:
       app: blogging
@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
         - name: blogging-container
-          image:  hamdi2513/bloggingapp:IMAGE_TAG
+          image: hamdi2513/bloggingapp:45 # <-- استبدل IMAGE_TAG بالـ tag الصحيح للصورة
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080 
+            - containerPort: 8080
           resources:
             requests:
               memory: "512Mi"
               cpu: "250m"
             limits:
               memory: "1Gi"
-              cpu: "500m"
+              cpu: "500m"  # مهم تحط "m" بعد الرقم
