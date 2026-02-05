@@ -48,16 +48,18 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
+                withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_TOKEN')]) {
                     sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectName=blogging \
                         -Dsonar.projectKey=blogging \
-                        -Dsonar.java.binaries=target/classes
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.login=${SONAR_TOKEN}
                     """
                 }
             }
         }
+
 
         stage('Package') {
             steps {
