@@ -47,18 +47,19 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
+            environment {
+                SONAR_TOKEN = credentials('sonar-id')
+            }
             steps {
-                withCredentials([string(credentialsId: 'sonar-id', variable: 'SONAR_TOKEN')]) {
-                    sh """
-                        ${SCANNER_HOME}/bin/sonar-scanner \
-                        -Dsonar.projectName=blogging \
-                        -Dsonar.projectKey=blogging \
-                        -Dsonar.java.binaries=target/classes \
-                        -Dsonar.login=${SONAR_TOKEN}
-                    """
-                }
+                sh '''
+                    ${SCANNER_HOME}/bin/sonar-scanner \
+                    -Dsonar.projectName=blogging \
+                    -Dsonar.projectKey=blogging \
+                    -Dsonar.java.binaries=target/classes
+                '''
             }
         }
+
 
 
         stage('Package') {
