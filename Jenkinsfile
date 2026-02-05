@@ -48,7 +48,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                withCredentials([string(credentialsId: 'so	sonar-id', variable: 'SONAR_TOKEN')]) {
+                withCredentials([string(credentialsId: 'sonar-id', variable: 'SONAR_TOKEN')]) {
                     sh """
                         ${SCANNER_HOME}/bin/sonar-scanner \
                         -Dsonar.projectName=blogging \
