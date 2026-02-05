@@ -47,20 +47,17 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            environment {
-                SONAR_TOKEN = credentials('sonar-id')
-            }
             steps {
-                sh '''
-                    ${SCANNER_HOME}/bin/sonar-scanner \
-                    -Dsonar.projectName=blogging \
-                    -Dsonar.projectKey=blogging \
-                    -Dsonar.java.binaries=target/classes
-                '''
+                withSonarQubeEnv('sonarqube') {
+                    sh """
+                        ${SCANNER_HOME}/bin/sonar-scanner \
+                        -Dsonar.projectName=blogging \
+                        -Dsonar.projectKey=blogging \
+                        -Dsonar.java.binaries=target/classes
+                    """
+                }
             }
         }
-
-
 
         stage('Package') {
             steps {
@@ -162,6 +159,5 @@ pipeline {
         failure {
             echo '❌ FAILURE: Pipeline failed!'
         }
-        // Uncomment the following block to send email notifications on failure
     }
 }
