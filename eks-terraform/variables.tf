@@ -25,7 +25,7 @@ variable "node_instance_type" {
 
 variable "my_ip" {
   description = "Your public IP to access EKS API server"
-  default     = "197.195.197.159/32"
+  default     = "156.221.65.212/32"
 }
 
 variable "vpc_cidr" {
