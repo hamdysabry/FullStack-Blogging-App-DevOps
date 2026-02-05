@@ -159,5 +159,6 @@ pipeline {
         failure {
             echo '❌ FAILURE: Pipeline failed!'
         }
+        // Uncomment the following block to send email notifications on failure
     }
 }
